@@ -4,75 +4,75 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
   <title>自定义K线</title>
   <!-- Include ECharts library -->
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js?v=2"></script>
   <style>
-    body {
+    body, html {
       margin: 0;
       padding: 0;
-      background-color: #161A25;
-      font-family: Arial, sans-serif;
-    }
-    #regentlogo {
-      text-align: center;
-      padding: 20px 0;
-      color: #fff;
+      overflow: hidden;
     }
     #chart-container {
       width: 100vw;
       height: 60vh;
     }
-    .input-wrapper {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 20px;
+    #regentlogo {
+      text-align: center;
+      padding-top: 20px;
+      padding-bottom: 20px;
     }
-    .input-wrapper label {
-      color: #fff;
+    #button {
+      padding-bottom: 20px;
+      padding-left: 20px;
     }
-    .input-wrapper input {
-      width: 100px;
-    }
-    .button-group {
-      display: flex;
-      gap: 10px;
-    }
-    .btn-dark {
-      background-color: #343a40;
-      border-color: #343a40;
-    }
+     .input-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px; /* Adjust the gap between input boxes */
+  }
   </style>
 </head>
 <body>
-  <div id="regentlogo">
-    按 Return 键快速录入数据
+  <!-- Container for the chart -->
+<div id="regentlogo">
+  按return回车键快速录入数据
+</div>
+
+<h1>Percentage Input Form</h1>
+
+<div class="input-wrapper">
+  <label for="open%">Open%:</label>
+  <input type="number" id="open%" name="open%" min="-100" max="100" step="0.01" required><br>
+
+  <label for="high%">High%:</label>
+  <input type="number" id="high%" name="high%" min="-100" max="100" step="0.01" required><br>
+
+  <label for="low%">Low%:</label>
+  <input type="number" id="low%" name="low%" min="-100" max="100" step="0.01" required><br>
+
+  <label for="close%">Close%:</label>
+  <input type="number" id="close%" name="close%" min="-100" max="100" step="0.01" required><br>
+</div>
+
+<input type="button" value="Get Percentages" onclick="getPercentages()" id="getPercentagesButton">
+<input type="button" value="Redo" onclick="redoEntry()" id="redoButton">
+  <input type="button" value="Export Data" onclick="exportData()" id="exportDataButton">
+
+
+  </form>
+
+  <text id="fs"></text>
+
+<div id="button">
+<button type="button" class="btn btn-dark" id="colorButton">切换：红涨绿跌</button>
   </div>
-  <div class="container">
-    <h1 class="mt-4" style="color: white">Percentage Input Form</h1>
-    <div class="input-wrapper">
-      <label for="open%">Open%:</label>
-      <input type="number" id="open%" name="open%" min="-100" max="100" step="0.01" required>
-      <label for="high%">High%:</label>
-      <input type="number" id="high%" name="high%" min="-100" max="100" step="0.01" required>
-      <label for="low%">Low%:</label>
-      <input type="number" id="low%" name="low%" min="-100" max="100" step="0.01" required>
-      <label for="close%">Close%:</label>
-      <input type="number" id="close%" name="close%" min="-100" max="100" step="0.01" required>
-    </div>
-    <div class="button-group">
-      <input type="button" value="Get Percentages" onclick="getPercentages()" class="btn btn-dark">
-      <input type="button" value="Redo" onclick="redoEntry()" class="btn btn-dark">
-      <input type="button" value="Export Data" onclick="exportData()" class="btn btn-dark">
-      <input type="button" value="Import Data" onclick="importData()" class="btn btn-dark">
-    </div>
-    <div id="chart-container"></div>
-  </div>
+  <div id="chart-container"></div>
 
   <script>
     var rawData = [
